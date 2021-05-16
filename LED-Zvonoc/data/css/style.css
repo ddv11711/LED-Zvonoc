@@ -1,0 +1,148 @@
+@charset "utf-8";
+*{
+   margin: 0;
+   padding: 0;
+   outline: none;
+   background-image: none;
+   text-decoration: none;
+   font-size: 1em;
+   font-family: "Roboto;", sans-serif;
+   border-radius:5px;
+   
+}
+body{
+	 background-color:#edeef0;
+     
+}
+img{
+	max-width: 100%;
+	height: auto;
+	width: auto\9;
+}
+
+h1{
+	color:#28b62c;
+	font-size:4em;
+	text-align:center;
+	line-height:110%;
+	margin-bottom: 5%;
+    margin-top: 5%;
+}
+h2{
+	color:#ffff;
+	font-size:1em;
+    padding-top:8px;
+}
+h3{
+	font-size:1.25em;
+	margin-top:4px;
+}
+h4{
+	color:#28b62c;
+	font-size:2em;
+	line-height:110%;
+	margin-bottom:10px;
+}
+hr{
+	-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;height:0;
+    margin-top:20px;margin-bottom:20px;border:0;border-top:1px solid #eee;
+}
+input:invalid {
+ border:2px solid red !important;
+}
+input:invalid + input[type=submit] {
+ pointer-events:none;
+ opacity:0.5;
+}
+#telo{
+	width:40%;
+	background-color:#ffff;
+	height:100%;
+	padding: 20px;
+	box-shadow: 0 12px 15px rgba(0, 0, 0, 0.4);
+	margin: 0 auto;
+	text-align:center;
+}
+#golova{
+	display:grad;
+	background-color:#75caeb;
+	width:40%;
+	height:34px;
+	margin-top:-32px;
+	margin-bottom:10px;
+}
+.form-control{
+    display:block;
+	height:34px;
+	width:calc(100% - 16px);
+	padding-left:12px;
+	border:2px solid #e7e7e7;
+	color: #555;
+}
+.form-control:focus{border-color:#66afe9;}
+.btn{
+	display:block;
+	height:30px;	
+	cursor: pointer;
+	color:#ffff;
+}
+input[type=submit]{font-size:1.25em;width:100%;}
+a{width:calc(100% - 4px);}
+.btn-btn{margin-top:5px;}
+.btn-green{background-color:#28b62c;border:2px solid #28b62c;}
+.btn-green:hover{background-color:#ffff;color:#28b62c;transition:1s;}
+.btn-red{background-color:#ff4136;border:2px solid #ff4136;}
+.btn-red:hover{background-color:#ffff;color:#ff4136;transition:1s;}
+.btn-blue{background-color:#158cba;border:2px solid #158cba;}
+.btn-blue:hover{background-color:#ffff;color:#158cba;transition:1s;}
+.btn-oreng{background-color:#ff851b;border:2px solid #ff851b;}
+.btn-oreng:hover{background-color:#ffff;color:#ff851b;transition:1s;}
+::selection{background:#28b62c;color:#fff;}
+::-moz-selection{background:#28b62c;color:#fff;}
+::-webkit-selection{background:#28b62c;color:#fff;}
+::-ms-selection{background:#28b62c;color:#fff;}
+::-o-selection{background:#28b62c;color:#fff;}
+.preloader{
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	background:#edeef0;
+	z-index:2;
+	transition:1s all;
+	}
+	.loader{
+	width:75px;
+	height:75px;
+	border:10px solid white;
+	border-radius:50%;
+	border-top-color:#28b62c ;
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	animation:2s spin infinite linear; 
+}
+@keyframes spin{
+	from{
+		transform:translate(-50%,-50%) rotate(0deg);
+	}
+	to{
+		transform:translate(-50%,-50%) rotate(360deg);
+	}
+}
+@media only screen and (max-width :950px){#telo{width:50%;}}
+@media only screen and (max-width :767px){
+	h1{font-size:2em;}
+	h3{font-size:1em;}
+	input[type=submit]{font-size:1em;}
+	h4{font-size:1.25em;}
+	#telo{width:60%;}
+}
+@media only screen and (max-width :613px){
+	#telo{width:90%;}
+}
+@media only screen and (max-width :445px){
+	#telo{width:100%;}
+}

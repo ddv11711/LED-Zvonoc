@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta http-equiv="Contrnt-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="ring,schedule">
+<meta name="description" content="Это Настройки">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/style.css" rel="stylesheet" type="text/css" >
+<link href="img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<script src="js/function.js" type="text/javascript"  ></script>
+  <script type="text/javascript">
+   var set_real_time;
+   function handleServerResponse(){
+    clearTimeout(set_real_time);
+    var res = jsonResponse.time.split(":");
+    real_time(hours=res[0],min=res[1],sec=res[2]);
+    doc.body.style.backgroundColor="rgb("+jsonResponse.rgb+")";
+   }
+     function real_time(hours,min,sec) {
+   sec=Number(sec)+1;
+    if (sec>=60){min=Number(min)+1;sec=0;}
+	if(sec<10)sec="0"+sec;
+    if (min>=60){hours=Number(hours)+1;min=0;}
+	if(min<10) min="0"+min;
+    if (hours>=24){hours=0};
+    doc.getElementById("time").innerHTML = hours+":"+min+":"+sec;
+    set_real_time = setTimeout("real_time("+hours+","+min+","+sec+");", 1000);
+   }
+   function load_time(submit){
+    server = "/Time";
+    send_request(submit,server);
+    load();
+   }
+   function time_zone(submit){
+    server = "/TimeZone?timezone="+doc.getElementById('timezone').value;
+    send_request(submit,server);
+   }
+   function set_time_zone(submit){
+    var set_date = new Date();
+    var gmtHours = -set_date.getTimezoneOffset()/60;
+    doc.getElementById('timezone').value = gmtHours;
+    server = "/TimeZone?timezone="+gmtHours;
+    send_request(submit,server);
+   }
+   function set_ssid(submit){
+    server = "/ssid?ssid="+doc.getElementById('ssid').value+"&password="+encodeURIComponent(doc.getElementById('password').value);
+    send_request(submit,server);
+    alert("Измененя вступят в силу после перезагрузки. Пожалуйта перезагрузите устройство.");
+   }
+   function set_ssid_ap(submit){
+    server = "/ssidap?ssidAP="+doc.getElementById('ssidap').value+"&passwordAP="+encodeURIComponent(doc.getElementById('passwordAp').value);
+    send_request(submit,server);
+    alert("Измененя вступят в силу после перезагрузки. Пожалуйта перезагрузите устройство.");
+   }
+   function set_ssdp(submit){
+    server = "/ssdp?ssdp="+doc.getElementById('ssdp').value;
+    send_request(submit,server);
+    doc.getElementById('golova_t').innerHTML = doc.getElementById('ssdp').value;
+   }
+   function set_text(submit){
+    server = "/text?text="+doc.getElementById('text').value;
+    send_request(submit,server);
+   }
+   function poisk(submit){
+    alert("Переподключитесь к точки доступа, чтобы обновить страницу");
+    server="/ip?device=ok";
+	send_request(submit,server);
+}
+   function restart(submit,texts){
+    if (confirm(texts)) {
+	 server = "/restart?device=ok";
+     send_request(submit,server);
+     return true;
+    } else {
+     return false;
+    }
+   }
+</script>
+<title >Настройки</title>
+</head>
+<body onload="load();"><!--
+<noscript style="font-size: 3em; text-align: center; line-height: 200%; color:red; margin:10%;" >Здравствуйте, в вашем браузере не включен JavaScript, без него сайт нормально функционировать не будет. Настоятельно просим включить JavaScript для работы с нашим сайтом!!!</noscript>
+<div id="page-preloader"class="preloader">
+<div class="loader"></div>
+</div>-->
+<h1>Нaстройки</h1>
+<div id="telo">
+<div id="golova"><h2 id="golova_t">{{SSDP}}</h2></div>
+<hr>
+<h4>Имя устройства</h4>
+<input id="ssdp" value="{{SSDP}}" class="form-control" pattern=".{1,20}" placeholder="Имя устройства">
+<input class="btn btn-green" value="Сохранить" onclick="set_ssdp(this);" type="submit">
+<hr>
+<h4>Подключение к WiFi роутеру</h4>
+<input id="ssid" value="{{ssid}}" class="form-control" pattern=".{1,32}" placeholder="Имя WiFi сети">
+<input id="password" value="{{password}}" pattern=".{8,32}" onblur="this.type='password'" onfocus="this.type='text'" type="password" class="form-control" placeholder="Пароль">
+<input class="btn btn-green" value="Сохранить" onclick="set_ssid(this);" type="submit">
+<hr>
+ <h4>IP в сети {{ssid}}:</h4>
+	 <h4>{{ip}}</h4>
+	 <input class="btn btn-blue" value="Узнать" type="submit" onclick="poisk(this);">
+<hr>
+<h4>Временная зона GMT</h4>
+<input id="timezone" value="{{timezone}}" pattern="[0-9]{1,3}" class="form-control">
+<input class="btn btn-green" value="Сохранить" onclick="time_zone(this);" type="submit">
+<input class="btn btn-blue btn-btn" value="Авто определение и сохранение зоны" onclick="set_time_zone(this);" type="submit">
+<h4 class="btn-btn" style="margin-top:30px">На устройстве сейчас <strong id="time">{{time}}</strong></h4>
+<input class="btn btn-blue" value="Синхронизировать время" onclick="load_time(this);" type="submit" style="margin-top:20px">
+<hr>
+<h4>Точка доступа</h4>
+<input id="ssidap" value="{{ssidAP}}" class="form-control" pattern=".{1,32}" placeholder="Имя WiFi сети">
+<input id="passwordAp" value="{{passwordAP}}" pattern=".{8,32}" onfocus="this.type='text'" onblur="this.type='password'" type="password" class="form-control" placeholder="Пароль">
+<input class="btn btn-green" value="Сохранить" onclick="set_ssid_ap(this);" type="submit">
+<hr>
+<h4>Выводимый текст</h4>
+<input id="text" value="{{text}}" class="form-control" pattern=".{0,255}" placeholder="Текст">
+<input class="btn btn-green" value="Сохранить" onclick="set_text(this);" type="submit">
+<hr>
+<input class="btn btn-oreng" value="Перезагрузить устройство" onclick="restart(this,'Вы действительно хотите перезагрузить устройство?');" type="submit">
+</div>
+</body>
+</html>
